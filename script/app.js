@@ -1,5 +1,5 @@
 //创建app模块
-var  app =angular.module("app",[]);
+var  app =angular.module("app",["ctrls","ngRoute"]);
 //调用run方法,该模块创建之后可以直接执行
 //该模块依赖的是根作用域,子作用域通常是与控制器绑定的
 app.run(["$rootScope",function($rootScope){
@@ -31,10 +31,25 @@ app.run(["$rootScope",function($rootScope){
                 }
             }
      }
-}])
+}]);
+//修复锚点值的改变
+app.config(["$locationProvider",function($locationProvider){
+           $locationProvider.hashPrefix("");
+}]);
+//配置路由
+app.config(["$routeProvider",function($routeProvider){
+     $routeProvider.when("/",{
+         redirectTo:"/index"  //跳转index处理
+     }).when("/index",{
+       templateUrl:"./views/test.html",     
+       controller:"index" 
+    }).when("/older",{
+        templateUrl:"./views/test.html",     
+        controller:"older" 
+     })
+}]);
 
-
-
+ 
 
 
 
